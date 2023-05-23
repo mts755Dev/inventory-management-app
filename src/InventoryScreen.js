@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
-import { collection, onSnapshot, query, where, deleteDoc, doc } from 'firebase/firestore';
+import { collection, onSnapshot, query, deleteDoc, doc } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
 
 const InventoryScreen = (props) => {
@@ -37,6 +37,10 @@ const InventoryScreen = (props) => {
     }
   };
 
+  const handleUpdateProduct = (productId) => {
+    props.navigation.navigate('UpdateProduct', { id: productId });
+  };
+
   const renderProductItem = ({ item }) => (
     <TouchableOpacity style={styles.productItem}>
       <Text style={styles.productName}>{item.name}</Text>
@@ -47,6 +51,9 @@ const InventoryScreen = (props) => {
         <TouchableOpacity style={styles.sellButton} onPress={() => handleSellProduct(item.id)}>
           <Text style={styles.buttonText}>Sell</Text>
         </TouchableOpacity>
+        <TouchableOpacity style={styles.updateButton} onPress={() => handleUpdateProduct(item.id)}>
+          <Text style={styles.buttonText}>Update</Text>
+        </TouchableOpacity>
         <TouchableOpacity style={styles.deleteButton} onPress={() => handleDeleteProduct(item.id)}>
           <Text style={styles.buttonText}>Delete</Text>
         </TouchableOpacity>
@@ -55,8 +62,8 @@ const InventoryScreen = (props) => {
   );
 
   const renderEmptyInventory = () => (
-    <View style={styles.emptyInventoryContainer}>
-      <Text style={styles.emptyInventoryText}>Inventory empty</Text>
+    <View>
+      <Text>No items in inventory empty</Text>
     </View>
   );
 
@@ -108,6 +115,13 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginRight: 10,
   },
+  updateButton: {
+    backgroundColor: 'orange',
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 5,
+    marginRight: 10,
+  },
   deleteButton: {
     backgroundColor: 'red',
     paddingVertical: 10,
@@ -117,15 +131,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontWeight: 'bold',
-  },
-  emptyInventoryContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  emptyInventoryText: {
-    fontSize: 18,
-    fontStyle: 'italic',
   },
 });
 

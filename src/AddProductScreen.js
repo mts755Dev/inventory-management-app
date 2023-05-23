@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Modal, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Modal, TouchableOpacity } from 'react-native';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
 
@@ -12,8 +12,11 @@ const AddProductScreen = ({ navigation }) => {
   const [showModal, setShowModal] = useState(false);
 
   const handleAddProduct = async () => {
-    if (!name || !quantity || !purchasingPrice) {
+    if (!name || !quantity || !purchasingPrice || !sellingPrice) {
       setError('Please fill in all fields.');
+      setShowModal(true);
+    } else if (parseInt(quantity) <= 0 || parseFloat(purchasingPrice) <= 0 || parseFloat(sellingPrice) <= 0) {
+      setError('Input values must be greater than zero.');
       setShowModal(true);
     } else {
       try {

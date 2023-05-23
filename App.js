@@ -8,12 +8,13 @@ import InventoryScreen from './src/InventoryScreen';
 import AddProductScreen from './src/AddProductScreen';
 import MonthlyProfitScreen from './src/MonthlyProfitScreen';
 import SellProductScreen from './src/SellProductScreen';
+import SellingHistoryScreen from './src/SellingHistoryScreen';
+import UpdateProductScreen from './src/UpdateProductScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 const App = () => {
-
   const getActiveRouteState = (route) => {
     const routeName = getFocusedRouteNameFromRoute(route) ?? 'Inventory';
 
@@ -48,6 +49,8 @@ const App = () => {
             iconName = 'add';
           } else if (route.name === 'Monthly Profit') {
             iconName = 'attach-money';
+          } else if (route.name === 'Selling History') {
+            iconName = 'history';
           }
 
           return <MaterialIcons name={iconName} size={size} color={color} />;
@@ -56,6 +59,7 @@ const App = () => {
         <Tab.Screen name="Inventory" component={InventoryScreen} options={{ headerShown: false }} />
         <Tab.Screen name="Add Product" component={AddProductScreen} options={{ headerShown: false }} />
         <Tab.Screen name="Monthly Profit" component={MonthlyProfitScreen} options={{ headerShown: false }} />
+        <Tab.Screen name="Selling History" component={SellingHistoryScreen} options={{ headerShown: false }} />
       </Tab.Navigator>
     );
   };
@@ -74,7 +78,22 @@ const App = () => {
             },
           }}
         />
-        <Stack.Screen name="SellProduct" component={SellProductScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="SellProduct" component={SellProductScreen} options={{
+          headerTitle: 'Inventory Management',
+          headerTitleStyle: {
+            textAlign: 'center',
+            fontWeight: 'bold',
+          },
+          headerLeft: () => null, // hide the back button
+        }} />
+        <Stack.Screen name="UpdateProduct" component={UpdateProductScreen} options={{
+          headerTitle: 'Inventory Management',
+          headerTitleStyle: {
+            textAlign: 'center',
+            fontWeight: 'bold',
+          },
+          headerLeft: () => null, // hide the back button
+        }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

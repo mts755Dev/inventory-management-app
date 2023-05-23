@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Modal, TouchableOpacity } from 'react-native';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { View, Text, TextInput, StyleSheet, Modal, TouchableOpacity } from 'react-native';
+import { collection, doc, addDoc, getDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
 
 const SellProductScreen = ({ route, navigation }) => {
@@ -44,23 +44,46 @@ const SellProductScreen = ({ route, navigation }) => {
     if (!sellingPrice || !quantityToSell) {
       displayError('Please fill in all fields');
       return;
-    } else {
-      try {
-        // Update selling price and quantity in Firebase
-        const updatedQuantity = product.quantity - parseInt(quantityToSell);
-        const productRef = doc(db, 'products', productId);
-        await updateDoc(productRef, {
-          sellingPrice: parseFloat(sellingPrice),
-          quantity: updatedQuantity,
-        });
-        setSellingPrice('');
-        setQuantityToSell('');
-        navigation.goBack();
-      } catch (error) {
-        displayError('Error selling product');
-      }
+    }
+
+    const sellingPriceValue = parseFloat(sellingPrice);
+    const quantityToSellValue = parseInt(quantityToSell);
+
+    if (sellingPriceValue <= 0 || quantityToSellValue <= 0) {
+      displayError('Selling price and quantity must be greater than zero');
+      return;
+    }
+
+    if (quantityToSellValue > product.quantity) {
+      displayError('Quantity to sell exceeds the available quantity');
+      return;
+    }
+
+    try {
+      const updatedQuantity = product.quantity - quantityToSellValue;
+      const productRef = doc(db, 'products', productId);
+      await updateDoc(productRef, {
+        quantity: updatedQuantity,
+      });
+
+      const sellingHistoryRef = collection(db, 'records');
+      await addDoc(sellingHistoryRef, {
+        date: serverTimestamp(),
+        name: product.name,
+        purchasingPrice: product.purchasingPrice,
+        sellingPrice: sellingPriceValue,
+        quantity: quantityToSellValue,
+        totalAmount: sellingPriceValue * quantityToSellValue,
+      });
+
+      setSellingPrice('');
+      setQuantityToSell('');
+      navigation.goBack();
+    } catch (error) {
+      displayError('Error selling product');
     }
   };
+
 
   if (!product) {
     return (
@@ -77,7 +100,7 @@ const SellProductScreen = ({ route, navigation }) => {
       <Text>Product Name: {product.name}</Text>
       <Text>Current Quantity:{product.quantity} </Text>
       <Text>Purchasing Price:{product.purchasingPrice} </Text>
-      <Text>Current Selling Price:{product.sellingPrice}</Text>
+      <Text>Selling Price:{product.sellingPrice} </Text>
       <TextInput
         style={styles.input}
         placeholder="Selling Price"
