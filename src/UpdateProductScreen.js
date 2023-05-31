@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
-import { db } from '../firebaseConfig';
+import { db } from '../firebase.js';
 
 const UpdateProductScreen = ({ route, navigation }) => {
   const id = route.params.id;

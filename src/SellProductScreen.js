@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, StyleSheet, Modal, TouchableOpacity } from 'react-native';
 import { collection, doc, addDoc, getDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
-import { db } from '../firebaseConfig';
+import { db } from '../firebase.js';
 
 const SellProductScreen = ({ route, navigation }) => {
   const productId = route.params.id;

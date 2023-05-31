@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 import { collection, onSnapshot, query, deleteDoc, doc } from 'firebase/firestore';
-import { db } from '../firebaseConfig';
+import { db } from '../firebase.js';
 
 const InventoryScreen = (props) => {
   const [products, setProducts] = useState([]);

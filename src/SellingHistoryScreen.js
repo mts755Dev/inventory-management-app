@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import { collection, onSnapshot, query, orderBy, getDocs, deleteDoc, doc } from 'firebase/firestore';
-import { db } from '../firebaseConfig';
+import { db } from '../firebase.js';
 
 const SellingHistoryScreen = () => {
   const [sellingHistory, setSellingHistory] = useState([]);

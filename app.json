@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "StickerSmash",
-    "slug": "StickerSmash",
+    "name": "hashiminventory",
+    "slug": "hashiminventory",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -17,14 +17,22 @@
     "ios": {
       "supportsTablet": true
     },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
-    },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "0d051826-b809-4172-996c-7bf31e86073e"
+      }
+    },
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "android": {
+      "package": "com.mts755dev.hashiminventory",
+      "versionCode": 1
     }
   }
 }

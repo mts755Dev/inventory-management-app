@@ -4,12 +4,12 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { MaterialIcons } from '@expo/vector-icons';
 
-import InventoryScreen from './src/InventoryScreen';
-import AddProductScreen from './src/AddProductScreen';
-import MonthlyProfitScreen from './src/MonthlyProfitScreen';
-import SellProductScreen from './src/SellProductScreen';
-import SellingHistoryScreen from './src/SellingHistoryScreen';
-import UpdateProductScreen from './src/UpdateProductScreen';
+import InventoryScreen from './src/InventoryScreen.js';
+import AddProductScreen from './src/AddProductScreen.js';
+import MonthlyProfitScreen from './src/MonthlyProfitScreen.js';
+import SellProductScreen from './src/SellProductScreen.js';
+import SellingHistoryScreen from './src/SellingHistoryScreen.js';
+import UpdateProductScreen from './src/UpdateProductScreen.js';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();

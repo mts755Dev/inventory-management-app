@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, Modal, TouchableOpacity } from 'react-native';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { db } from '../firebaseConfig';
+import { db } from '../firebase.js';
 
 const AddProductScreen = ({ navigation }) => {
   const [name, setName] = useState('');
